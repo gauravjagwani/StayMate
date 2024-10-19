@@ -67,7 +67,7 @@ const RegisterPage = () => {
           type="text"
           placeholder="First Name"
           name="firstName"
-          className="p-3 rounded-md border w-full hover:border-pink-600"
+          className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
           value={formData.firstName}
           onChange={handleChange}
           required
@@ -76,7 +76,7 @@ const RegisterPage = () => {
           type="text"
           placeholder="Last Name"
           name="lastName"
-          className="p-3 rounded-md border w-full hover:border-pink-600"
+          className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
           value={formData.lastName}
           onChange={handleChange}
         />
@@ -84,7 +84,7 @@ const RegisterPage = () => {
           type="email"
           placeholder="Email"
           name="email"
-          className="p-3 rounded-md border w-full hover:border-pink-600"
+          className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
           value={formData.email}
           onChange={handleChange}
           required
@@ -93,7 +93,7 @@ const RegisterPage = () => {
           type="password"
           placeholder="Password"
           name="password"
-          className="p-3 rounded-md border w-full hover:border-pink-600"
+          className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
           value={formData.password}
           onChange={handleChange}
         />
@@ -101,7 +101,7 @@ const RegisterPage = () => {
           type="password"
           placeholder="Confirm Password"
           name="confirmPassword"
-          className="p-3 rounded-md border w-full hover:border-primary"
+          className="p-3 rounded-md border w-full hover:border-primary focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
           value={formData.confirmPassword}
           onChange={handleChange}
           required

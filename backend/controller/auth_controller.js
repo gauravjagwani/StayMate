@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const register = async (req, res, next) => {
   try {
@@ -32,5 +33,32 @@ export const register = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.status(400).send(err.message);
+  }
+};
+
+export const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const validUser = await User.findOne({ email });
+    if (!validUser) {
+      return res.status(409).json({ message: "Invalid Credentials" });
+    }
+
+    const validPassword = bcryptjs.compareSync(password, validUser.password);
+
+    if (!validPassword) {
+      return res.status(409).json({ message: "Invalid Credentials" });
+    }
+
+    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+    console.log("DOCSS :", validUser._doc);
+    const { password: pass, ...rest } = validUser._doc;
+    console.log(pass);
+    res.json({
+      token,
+      rest,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
