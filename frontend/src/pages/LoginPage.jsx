@@ -1,13 +1,47 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:4000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+
+      if (data) {
+        dispatch(
+          setLogin({
+            user: data.rest,
+            token: data.token,
+          })
+        );
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
   return (
     <div className="mt-32 max-w-lg mx-auto shadow-md rounded-lg py-4 px-3 ">
       <h1 className="text-4xl text-center font-medium mb-4">Login</h1>
-      <form className="flex flex-col gap-3 items-center ">
+      <form
+        className="flex flex-col gap-3 items-center "
+        onSubmit={handleSubmit}
+      >
         <input
           type="email"
           placeholder="Email"
