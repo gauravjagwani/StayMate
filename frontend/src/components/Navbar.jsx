@@ -56,11 +56,12 @@ const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
   console.log(user);
   return (
-    <div className="py-[10px] px-[60px] sm:py-[10px] sm:px-5 flex justify-between items-center relative max-w-6xl mx-auto">
+    // <div className="py-[10px] px-[60px] sm:py-[10px] sm:px-5 flex justify-between items-center relative mx-auto">
+    <div className=" px-20 md:py-[15px] sm:py-[5px] flex justify-between items-center relative mx-auto">
       <Link to={"/"}>
         <h1 className="text-3xl">Logo</h1>
       </Link>
-      <div className="hidden lg:flex lg:w-[340px] lg: justify-between border-[2px] border-black-[2] shadow-lg rounded-[30px] h-[50px] px-5 gap-10 items-center">
+      <div className="hidden lg:flex lg:w-[40%] justify-between border-[2px] border-black-[2] shadow-lg rounded-[30px] h-[50px] px-5 gap-10 items-center">
         <input
           type="text"
           className="outline-none"
@@ -91,7 +92,7 @@ const Navbar = () => {
           onClick={() => setDropdown(!dropdown)}
         >
           <LuMenu size={18} />
-          {user ? (
+          {user?.user ? (
             <img
               src={`http://localhost:4000/${user?.user?.profileImage.replace(
                 "public",
@@ -105,23 +106,23 @@ const Navbar = () => {
           )}
         </button>
         {dropdown && !user && (
-          <div className="absolute bg-white right-15 sm:right-5 top-20 ">
+          <div className="absolute bg-white right-15 sm:right-5 top-20 w-52 flex flex-col gap-3 border border-black-3 p-2.5 shadow-lg rounded-md">
             {notloggedinMenuItems.map((item, index) => {
               return (
                 <Link key={index} to={item?.link}>
-                  {item.menu}
+                  {item?.menu}
                 </Link>
               );
             })}
           </div>
         )}
         {dropdown && user && (
-          <div className="absolute bg-white right-15 sm:right-5 top-20 flex flex-col gap-3 border border-black-3 p-2.5 shadow-lg rounded-md">
+          <div className="absolute bg-white right-15 sm:right-5 top-20 w-52 flex flex-col gap-3 border border-black-3 p-2.5 shadow-lg rounded-md">
             {loggedinMenuItems.map((item, index) => {
               return (
                 <Link
                   key={index}
-                  to={`/${user.user._id}${item?.link}`}
+                  to={`/${user?.user._id}${item?.link}`}
                   className="hover:bg-gray-100 p-2 rounded-md"
                 >
                   {item.menu}
