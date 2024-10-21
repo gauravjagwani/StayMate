@@ -7,10 +7,27 @@ const CreateListing = () => {
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
   const [perks, setPerks] = useState([]);
+
   const [guestCount, setGuestCount] = useState(1);
   const [bedroomCount, setBedroomCount] = useState(1);
   const [bedCount, setBedCount] = useState(1);
   const [bathroomCount, setBathroomCount] = useState(1);
+
+  const [formAddress, setFormAddress] = useState("");
+  const [formDescription, setFormDescription] = useState({
+    title: "",
+    description: "",
+    price: 0,
+  });
+  console.log(formDescription);
+
+  const handleChangeDescription = (e) => {
+    const { name, value } = e.target;
+    setFormDescription({
+      ...formDescription,
+      [name]: value,
+    });
+  };
 
   const handleSelectPerks = (perk) => {
     if (perks.includes(perk)) {
@@ -25,7 +42,7 @@ const CreateListing = () => {
       <Navbar />
 
       <div className=" px-5 flex flex-col py-10 lg:px-3 pb-30 min-h-60 mx-auto">
-        <h1 className="text-3xl flex justify-center mb-6">
+        <h1 className="text-sm md:text-3xl flex justify-center mb-6 font-semibold">
           Create Your Listing
         </h1>
         <form className="px-20 flex flex-col gap-4">
@@ -38,8 +55,11 @@ const CreateListing = () => {
             </p>
             <input
               type="text"
+              name="title"
+              value={formDescription.title}
+              onChange={handleChangeDescription}
               placeholder="title, for example: My lovely apt "
-              className="p-2 border border-black-2 w-[30%] rounded-[25px] focus:outline-none focus:border-primary text-sm "
+              className="p-3 border border-black-2 w-[30%] rounded-md focus:outline-none focus:border-2 focus:border-primary text-sm "
             />
           </div>
           {/* Address */}
@@ -48,8 +68,10 @@ const CreateListing = () => {
             <p className="text-sm opacity-80">Address to this place</p>
             <input
               type="text"
+              value={formAddress}
               placeholder="title, for example: My lovely apt "
-              className="p-2 border border-black-2 w-[30%] rounded-[25px] focus:outline-none focus:border-primary text-sm "
+              onChange={(e) => setFormAddress(e.target.value)}
+              className="p-3 border border-black-2 w-[30%] rounded-md focus:outline-none focus:border-2 focus:border-primary text-sm "
             />
           </div>
 
@@ -246,8 +268,10 @@ const CreateListing = () => {
             <p className="text-sm opacity-80">Add description of your place</p>
             <textarea
               name="description"
+              value={formDescription.description}
+              onChange={handleChangeDescription}
               placeholder="Description..."
-              className="border border-black-3 p-4 rounded-lg font-thin w-full md:w-[60%]"
+              className="border border-black-3 p-4 text-sm rounded-lg font-thin w-full md:w-[60%] focus:outline-none focus:border-2 focus:border-primary"
             />
           </div>
 
@@ -259,13 +283,18 @@ const CreateListing = () => {
               <span className="text-xl font-bold mr-4">Rs.</span>
               <input
                 type="number"
-                name="description"
+                name="price"
+                value={formDescription.price}
+                onChange={handleChangeDescription}
                 placeholder="100"
                 required
-                className="border border-black-3 p-4 rounded-lg font-thin w-40"
+                className="border border-black-3 p-3 rounded-lg font-thin w-40 focus:outline-none focus:border-2 focus:border-primary"
               />
             </div>
           </div>
+          <button className="w-full py-2 bg-primary text-white text-lg font-normal text-center rounded-md">
+            Save
+          </button>
         </form>
       </div>
     </div>
