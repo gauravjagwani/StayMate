@@ -54,7 +54,7 @@ const loggedinMenuItems = [
 const Navbar = () => {
   const user = useSelector((state) => state.user);
   const [dropdown, setDropdown] = useState(false);
-  console.log(user);
+
   return (
     // <div className="py-[10px] px-[60px] sm:py-[10px] sm:px-5 flex justify-between items-center relative mx-auto">
     <div className=" px-20 md:py-[15px] sm:py-[5px] flex justify-between items-center relative mx-auto">

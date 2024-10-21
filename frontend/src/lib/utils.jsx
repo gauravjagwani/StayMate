@@ -1,6 +1,33 @@
-import { MdOutlineVilla } from "react-icons/md";
+import {
+  FaAirFreshener,
+  FaBath,
+  FaCity,
+  FaFireExtinguisher,
+  FaHouseUser,
+  FaParking,
+  FaUmbrellaBeach,
+} from "react-icons/fa";
+import { FaKitchenSet } from "react-icons/fa6";
+import { BiSolidFridge, BiWifi } from "react-icons/bi";
+import {
+  GiCctvCamera,
+  GiDesert,
+  GiIsland,
+  GiMountainRoad,
+  GiToaster,
+  GiWorld,
+} from "react-icons/gi";
+import {
+  MdMicrowave,
+  MdNoMeetingRoom,
+  MdOutlinePool,
+  MdOutlineVilla,
+  MdPets,
+  MdYard,
+} from "react-icons/md";
 import { RiChatPrivateLine } from "react-icons/ri";
 import { SiMyspace } from "react-icons/si";
+import { PiTelevisionFill } from "react-icons/pi";
 export const categoryItems = [
   {
     id: 0,
@@ -132,5 +159,60 @@ export const types = [
       "Sleep in a common area or shared room, potentially with other guests or hosts",
     title: "Shared Space",
     icon: <SiMyspace size={26} />,
+  },
+];
+
+export const facilities = [
+  {
+    name: "Bath",
+    icon: <FaBath size={26} />,
+  },
+  {
+    name: "TV",
+    icon: <PiTelevisionFill size={26} />,
+  },
+  {
+    name: "Air Conditioning",
+    icon: <FaAirFreshener size={26} />,
+  },
+  {
+    name: "Security cameras",
+    icon: <GiCctvCamera size={26} />,
+  },
+  {
+    name: "Fire extinguisher",
+    icon: <FaFireExtinguisher size={26} />,
+  },
+  {
+    name: "Wifi",
+    icon: <BiWifi size={26} />,
+  },
+  {
+    name: "Cooking set",
+    icon: <FaKitchenSet size={26} />,
+  },
+  {
+    name: "Refrigerator",
+    icon: <BiSolidFridge size={26} />,
+  },
+  {
+    name: "Microwave",
+    icon: <MdMicrowave size={26} />,
+  },
+  {
+    name: "Stove",
+    icon: <GiToaster size={26} />,
+  },
+  {
+    name: "Garden",
+    icon: <MdYard size={26} />,
+  },
+  {
+    name: "Parking",
+    icon: <FaParking size={26} />,
+  },
+  {
+    name: " Pet allowed",
+    icon: <MdPets size={26} />,
   },
 ];
