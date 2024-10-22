@@ -39,6 +39,7 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+
     const validUser = await User.findOne({ email });
     if (!validUser) {
       return next(errorHandler(400, "Invalid Credentials"));

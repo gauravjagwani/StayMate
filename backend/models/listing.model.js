@@ -54,7 +54,7 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps }
+  { timestamps: true }
 );
 
 const ListingModels = mongoose.model("ListingModels", listingSchema);

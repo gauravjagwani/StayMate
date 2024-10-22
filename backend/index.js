@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth_route.js";
+import listingRoutes from "./routes/listing_route.js";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.listen(4000, () => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/listings", listingRoutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
