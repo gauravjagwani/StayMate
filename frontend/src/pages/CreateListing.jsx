@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { categoryItems, facilities, types } from "../lib/utils";
 import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { BiTrash } from "react-icons/bi";
+import { IoIosImages } from "react-icons/io";
 
 const CreateListing = () => {
+  const navigate = useNavigate();
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
   const [perks, setPerks] = useState([]);
@@ -19,7 +25,6 @@ const CreateListing = () => {
     description: "",
     price: 0,
   });
-  console.log(formDescription);
 
   const handleChangeDescription = (e) => {
     const { name, value } = e.target;
@@ -37,6 +42,94 @@ const CreateListing = () => {
     }
   };
 
+  const [photos, setPhotos] = useState([]);
+
+  const handleUploadPhotos = (e) => {
+    const newPhotos = e.target.files;
+
+    setPhotos((prevPhotos) => [...prevPhotos, ...newPhotos]);
+  };
+
+  const handleDragPhoto = (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(photos);
+
+    const [reorderedItem] = items.splice(result.source.index, 1);
+
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setPhotos(items);
+  };
+
+  const handleRemovePhoto = (indexToRemove) => {
+    setPhotos((prevPhotos) =>
+      prevPhotos.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
+  const creatorId = useSelector((state) => state?.user?.user?._id);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      /*
+      const listingsForm = {};
+
+      Object.assign(listingsForm, {
+        creator: creatorId,
+        title: formDescription.title,
+        category: category,
+        address: formAddress,
+        type,
+        guestCount,
+        bedroomCount,
+        bedCount,
+        bathroomCount,
+        perks,
+        description: formDescription.description,
+        price: formDescription.price,
+      });
+
+      */
+      const listingsForm = new FormData();
+      listingsForm.append("creator", creatorId);
+      listingsForm.append("title", formDescription.title);
+      listingsForm.append("category", category);
+      listingsForm.append("address", formAddress);
+      listingsForm.append("type", type);
+      listingsForm.append("guestCount", guestCount);
+      listingsForm.append("bedroomCount", bedroomCount);
+      listingsForm.append("bedCount", bedCount);
+      listingsForm.append("bathroomCount", bathroomCount);
+      listingsForm.append("description", formDescription.description);
+      listingsForm.append("price", formDescription.price);
+
+      perks.forEach((perk) => {
+        listingsForm.append("perks", perk);
+      });
+
+      photos.forEach((photo) => {
+        listingsForm.append("listingPhotos", photo);
+      });
+
+      const res = await fetch("http://localhost:4000/api/listings/create", {
+        method: "POST",
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+
+        body: listingsForm,
+      });
+      if (res.ok) {
+        console.log("Data Posted Successfully");
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div>
       <Navbar />
@@ -45,7 +138,7 @@ const CreateListing = () => {
         <h1 className="text-sm md:text-3xl flex justify-center mb-6 font-semibold">
           Create Your Listing
         </h1>
-        <form className="px-20 flex flex-col gap-4">
+        <form className="px-20 flex flex-col gap-4" onSubmit={handleSubmit}>
           {/* Title */}
           <div className="flex flex-col gap-1 mb-4">
             <h2 className="text-[22px] font-semibold">Title</h2>
@@ -112,23 +205,23 @@ const CreateListing = () => {
               Select the type of the place you offer
             </p>
             <div className="flex flex-col flex-wrap gap-4 mt-2">
-              {types.map((c) => {
+              {types.map((t) => {
                 return (
                   <div
-                    key={c?.id}
+                    key={t?.id}
                     className={`flex flex-col justify-start mr-3 cursor-pointer border border-gray-300 w-[60%] h-20 rounded-lg gap-2 ${
-                      type === c.title
+                      type === t.title
                         ? "border-[2.5px] border-primary bg-primary bg-opacity-[0.07] transition-all ease-in"
                         : ""
                     }`}
-                    onClick={() => setType(c.title)}
+                    onClick={() => setType(t.title)}
                   >
                     <div className="flex justify-between items-center">
                       <div className="flex flex-col gap-1 py-3 px-3 leading-tight">
-                        <p className="text-base font-semibold">{c?.title}</p>
-                        <p className="text-sm">{c?.description}</p>
+                        <p className="text-base font-semibold">{t?.title}</p>
+                        <p className="text-sm">{t?.description}</p>
                       </div>
-                      <div className="pr-3">{c.icon}</div>
+                      <div className="pr-3">{t.icon}</div>
                     </div>
                   </div>
                 );
@@ -260,6 +353,100 @@ const CreateListing = () => {
             <h2 className="text-[22px] font-semibold">Upload Photos</h2>
             <p className="text-sm opacity-80">Add Photos of your place</p>
             {/* Currently on Hold */}
+            <DragDropContext onDragEnd={handleDragPhoto}>
+              <Droppable droppableId="photos" direction="horizontal">
+                {(provided) => (
+                  <div
+                    className="flex flex-wrap gap-4"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    {photos.length < 1 && (
+                      <>
+                        <input
+                          id="image"
+                          type="file"
+                          className="hidden"
+                          accept="image/*"
+                          onChange={handleUploadPhotos}
+                          multiple
+                        />
+
+                        <label
+                          htmlFor="image"
+                          className="flex flex-col justify-center items-center cursor-pointer border border-dashed border-gray-300 py-10 px-[100px] rounded-lg"
+                        >
+                          <div className="text-6xl">
+                            <IoIosImages />
+                          </div>
+
+                          <p className="font-semibold text-center">
+                            Upload from your device
+                          </p>
+                        </label>
+                      </>
+                    )}
+
+                    {photos.length >= 1 && (
+                      <>
+                        {photos.map((photo, index) => (
+                          <Draggable
+                            key={index}
+                            draggableId={index.toString()}
+                            index={index}
+                          >
+                            {(provided) => (
+                              <div
+                                className="relative w-64 h-36 cursor-move"
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                <img
+                                  src={URL.createObjectURL(photo)}
+                                  alt="place"
+                                  className="w-full h-full object-cover"
+                                />
+
+                                <button
+                                  type="button"
+                                  onClick={() => handleRemovePhoto(index)}
+                                  className="absolute ring-0 top-0 p-1 bg-white bg-opacity-80 text-lg cursor-pointer"
+                                >
+                                  <BiTrash className="text-red-700" />
+                                </button>
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+
+                        <input
+                          id="image"
+                          type="file"
+                          className="hidden"
+                          accept="image/*"
+                          onChange={handleUploadPhotos}
+                          multiple
+                        />
+
+                        <label
+                          htmlFor="image"
+                          className="flex flex-col justify-center items-center cursor-pointer border border-dashed border-gray-300 w-64 h-36"
+                        >
+                          <div className="text-6xl">
+                            <IoIosImages />
+                          </div>
+
+                          <p className="font-semibold text-center">
+                            Upload from your device
+                          </p>
+                        </label>
+                      </>
+                    )}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
           </div>
 
           {/* Description */}
@@ -292,7 +479,10 @@ const CreateListing = () => {
               />
             </div>
           </div>
-          <button className="w-full py-2 bg-primary text-white text-lg font-normal text-center rounded-md">
+          <button
+            type="submit"
+            className="w-full py-2 bg-primary text-white text-lg font-normal text-center rounded-md"
+          >
             Save
           </button>
         </form>
