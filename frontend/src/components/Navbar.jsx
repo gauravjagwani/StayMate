@@ -53,6 +53,7 @@ const loggedinMenuItems = [
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);
+  console.log("USER", user);
   const [dropdown, setDropdown] = useState(false);
 
   return (

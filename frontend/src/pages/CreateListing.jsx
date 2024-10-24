@@ -352,7 +352,7 @@ const CreateListing = () => {
           <div className="flex flex-col gap-1 mb-4">
             <h2 className="text-[22px] font-semibold">Upload Photos</h2>
             <p className="text-sm opacity-80">Add Photos of your place</p>
-            {/* Currently on Hold */}
+
             <DragDropContext onDragEnd={handleDragPhoto}>
               <Droppable droppableId="photos" direction="horizontal">
                 {(provided) => (
