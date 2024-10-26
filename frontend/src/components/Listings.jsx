@@ -59,7 +59,7 @@ const Listings = () => {
 
       {/* Lisitng Cards */}
       <div className="px-12 pb-32 lg:px-5 flex flex-wrap justify-center gap-5">
-        {listings.length > 0 &&
+        {listings &&
           listings.map((list, index, booking = false) => (
             <ListingCards key={index} list={list} booking />
           ))}

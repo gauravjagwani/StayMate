@@ -25,7 +25,7 @@ const ListingCards = ({ list, booking }) => {
       className=" relative cursor-pointer p-2.5 rounded-lg hover:shadow-lg"
       onClick={() => navigate(`/listings/${_id}`)}
     >
-      <div className=" w-[320px] h-[302px] overflow-hidden rounded-lg mb-2.5 border border-black">
+      <div className=" w-[320px] h-[302px] overflow-hidden rounded-lg mb-2.5">
         <div
           className="flex w-full h-full items-center transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -44,7 +44,7 @@ const ListingCards = ({ list, booking }) => {
 
                 <div
                   className="absolute top-1/2 transform -translate-y-1/2 p-1.5 rounded-full border-none cursor-pointer
-                 flex items-center justify-center bg-white/70 z-50 hover:bg-white right-2.5"
+                 flex items-center justify-center bg-white/70 z-30 hover:bg-white right-2.5"
                   onClick={(e) => {
                     e.stopPropagation();
                     goToPrevSlide(e);
@@ -54,7 +54,7 @@ const ListingCards = ({ list, booking }) => {
                 </div>
                 <div
                   className="absolute top-1/2 transform -translate-y-1/2 p-1.5 rounded-full border-none cursor-pointer
-                 flex items-center justify-center bg-white/70 z-50 hover:bg-white left-2.5"
+                 flex items-center justify-center bg-white/70 z-30 hover:bg-white left-2.5"
                   onClick={(e) => {
                     e.stopPropagation();
                     goToNextSlide(e);

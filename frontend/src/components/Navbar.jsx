@@ -58,7 +58,7 @@ const Navbar = () => {
 
   return (
     // <div className="py-[10px] px-[60px] sm:py-[10px] sm:px-5 flex justify-between items-center relative mx-auto">
-    <div className=" px-20 md:py-[15px] sm:py-[5px] flex justify-between items-center relative mx-auto">
+    <div className=" px-20 md:py-[15px] sm:py-[5px] flex justify-between items-center relative mx-auto z-50">
       <Link to={"/"}>
         <h1 className="text-3xl">Logo</h1>
       </Link>
@@ -107,7 +107,7 @@ const Navbar = () => {
           )}
         </button>
         {dropdown && !user && (
-          <div className="absolute bg-white right-15 sm:right-5 top-20 w-52 flex flex-col gap-3 border border-black-3 p-2.5 shadow-lg rounded-md">
+          <div className="absolute bg-white right-15 sm:right-5 top-20 w-52 flex flex-col gap-3 border border-black-3 p-2.5 shadow-lg rounded-md z-50">
             {notloggedinMenuItems.map((item, index) => {
               return (
                 <Link key={index} to={item?.link}>
@@ -123,7 +123,7 @@ const Navbar = () => {
               return (
                 <Link
                   key={index}
-                  to={`/${user?.user._id}${item?.link}`}
+                  to={`/${user?.user?._id}${item?.link}`}
                   className="hover:bg-gray-100 p-2 rounded-md"
                 >
                   {item.menu}

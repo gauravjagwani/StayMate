@@ -72,3 +72,14 @@ export const getListings = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getListingDetails = async (req, res, next) => {
+  try {
+    const { listingId } = req.params;
+
+    const listing = await ListingModels.findById(listingId).populate("creator");
+    res.status(200).json(listing);
+  } catch (err) {
+    next(err);
+  }
+};
