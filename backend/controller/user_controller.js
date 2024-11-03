@@ -60,3 +60,14 @@ export const addWishList = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getPropertyList = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const properties = await ListingModels.find({
+      creator: userId,
+    }).populate("creator");
+
+    res.status(200).json(properties);
+  } catch (err) {}
+};
