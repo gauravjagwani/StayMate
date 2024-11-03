@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FaHeart } from "react-icons/fa";
+import { setWishList } from "../redux/userSlice";
 
 const ListingCards = ({
   listingId,
@@ -17,6 +21,9 @@ const ListingCards = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state?.user?.user);
+  console.log("UUSSEERRR", user);
   // const { _id, listingPhotoPaths, title, category, type, price, address } =
   //   list;
   console.log("Photolist", listingPhotoPaths);
@@ -32,6 +39,31 @@ const ListingCards = ({
     setCurrentIndex((prevIndex) => (prevIndex + 1) % listingPhotoPaths.length);
   };
 
+  // WishList
+
+  const wishList = user?.wishList || [];
+  const isAddedToWishlist = wishList.find((item) => item._id === listingId);
+  const patchWishList = async () => {
+    try {
+      if (user?._id !== creator._id) {
+        const res = await fetch(
+          `http://localhost:4000/api/user/${user?._id}/${listingId}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "appilication/json",
+            },
+          }
+        );
+        const data = await res.json();
+        dispatch(setWishList(data?.wishList));
+      } else {
+        return;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div
       className=" relative cursor-pointer p-2.5 rounded-lg hover:shadow-lg"
@@ -95,6 +127,17 @@ const ListingCards = ({
           <p className="text-[14px] font-semibold">&#8377;{totalPrice}</p>
         </>
       )}
+      <button
+        className={`absolute top-5 right-5 z-[999] text-xl ${
+          isAddedToWishlist ? "text-red-600" : "text-white"
+        }`}
+        onClick={(e) => {
+          e.stopPropagation();
+          patchWishList();
+        }}
+      >
+        <FaHeart />
+      </button>
     </div>
   );
 };
