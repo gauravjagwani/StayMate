@@ -4,6 +4,8 @@ import { CiSearch } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import { LuMenu } from "react-icons/lu";
 import { FaUser } from "react-icons/fa";
+import { setLogout } from "../redux/userSlice";
+import { useDispatch } from "react-redux";
 
 const notloggedinMenuItems = [
   {
@@ -21,7 +23,7 @@ const notloggedinMenuItems = [
 const loggedinMenuItems = [
   {
     menu: "Trip List",
-    link: "/triplist",
+    link: "/trips",
     isloggedin: true,
   },
   {
@@ -46,13 +48,14 @@ const loggedinMenuItems = [
   },
   {
     menu: "Logout",
-    link: "/create-listing",
+    link: "/login",
     isloggedin: true,
   },
 ];
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   console.log("USER", user);
   const [dropdown, setDropdown] = useState(false);
 
@@ -119,8 +122,24 @@ const Navbar = () => {
         )}
         {dropdown && user && (
           <div className="absolute bg-white right-15 sm:right-5 top-20 w-52 flex flex-col gap-3 border border-black-3 p-2.5 shadow-lg rounded-md">
-            {loggedinMenuItems.map((item, index) => {
-              return (
+            {loggedinMenuItems.map((item, index) =>
+              item?.menu === "Logout" ? (
+                <Link
+                  onClick={() =>
+                    dispatch(
+                      setLogout({
+                        user: null,
+                        token: null,
+                      })
+                    )
+                  }
+                  key={index}
+                  to={`/login`}
+                  className="hover:bg-gray-100 p-2 rounded-md"
+                >
+                  {item.menu}
+                </Link>
+              ) : (
                 <Link
                   key={index}
                   to={`/${user?.user?._id}${item?.link}`}
@@ -128,8 +147,8 @@ const Navbar = () => {
                 >
                   {item.menu}
                 </Link>
-              );
-            })}
+              )
+            )}
           </div>
         )}
       </div>

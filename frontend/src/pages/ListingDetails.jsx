@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PhotoGallery from "../components/PhotoGallery";
 import { facilities } from "../lib/utils";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
+import { useSelector } from "react-redux";
 
 const ListingDetails = () => {
   const { listingId } = useParams();
   const [listings, setListings] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getListingDetails();
@@ -50,8 +52,32 @@ const ListingDetails = () => {
   const dayCount = Math.round(end - start) / (1000 * 60 * 60 * 24);
 
   // console.log("LISTING DETAILS", listings);
+  const customerId = useSelector((state) => state?.user?.user?._id);
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    try {
+      const bookingForm = {
+        customerId,
+        listingId,
+        hostId: listings?.creator?._id,
+        startDate: dateRange[0].startDate.toDateString(),
+        endDate: dateRange[0].endDate.toDateString(),
+        totalPrice: listings?.price * dayCount,
+      };
+      const res = await fetch("http://localhost:4000/api/booking/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingForm),
+      });
+
+      if (res.ok) {
+        console.log(res);
+        navigate(`/${customerId}/trips`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="mb-20">
       <Navbar />

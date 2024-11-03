@@ -60,9 +60,29 @@ const Listings = () => {
       {/* Lisitng Cards */}
       <div className="px-12 pb-32 lg:px-5 flex flex-wrap justify-center gap-5">
         {listings &&
-          listings.map((list, index, booking = false) => (
-            <ListingCards key={index} list={list} booking />
-          ))}
+          listings.map(
+            ({
+              _id,
+              creator,
+              listingPhotoPaths,
+              address,
+              category,
+              type,
+              price,
+              booking = false,
+            }) => (
+              <ListingCards
+                listingId={_id}
+                creator={creator}
+                listingPhotoPaths={listingPhotoPaths}
+                address={address}
+                category={category}
+                type={type}
+                price={price}
+                booking={booking}
+              />
+            )
+          )}
       </div>
     </div>
   );

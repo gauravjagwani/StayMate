@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
+  const [loginError, setloginError] = useState(false);
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const LoginPage = () => {
       });
       const data = await res.json();
 
-      if (data) {
+      if (res.ok) {
         dispatch(
           setLogin({
             user: data.rest,
@@ -30,6 +31,8 @@ const LoginPage = () => {
           })
         );
         navigate("/");
+      } else {
+        setloginError(true);
       }
     } catch (err) {
       console.log(err.message);
@@ -61,14 +64,14 @@ const LoginPage = () => {
           required
         />
 
-        {/* {!passwordMatch && (
-          <p className="text-red-500 "> Password are not matched!</p>
-        )} */}
+        {loginError && (
+          <p className="text-red-500 "> Credentials are incorrect</p>
+        )}
 
         <button
           type="submit"
           className="bg-primary p-3 w-full text-white rounded-md disabled:opacity-70 disabled:cursor-not-allowed"
-          // disabled={!passwordMatch}
+          // disabled={loginError}
         >
           Login
         </button>

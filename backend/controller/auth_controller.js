@@ -50,9 +50,10 @@ export const login = async (req, res, next) => {
     if (!validPassword) {
       return next(errorHandler(400, "Invalid Credentials"));
     }
+    console.log("IspasswordValid:", validPassword);
 
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
-    console.log("DOCSS :", validUser._doc);
+    // console.log("DOCSS :", validUser._doc);
     const { password: pass, ...rest } = validUser._doc;
     console.log(pass);
     res.json({

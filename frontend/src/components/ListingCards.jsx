@@ -2,11 +2,23 @@ import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const ListingCards = ({ list, booking }) => {
+const ListingCards = ({
+  listingId,
+  creator,
+  listingPhotoPaths,
+  address,
+  category,
+  type,
+  price,
+  booking,
+  startDate,
+  endDate,
+  totalPrice,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
-  const { _id, listingPhotoPaths, title, category, type, price, address } =
-    list;
+  // const { _id, listingPhotoPaths, title, category, type, price, address } =
+  //   list;
   console.log("Photolist", listingPhotoPaths);
 
   const goToPrevSlide = () => {
@@ -23,7 +35,7 @@ const ListingCards = ({ list, booking }) => {
   return (
     <div
       className=" relative cursor-pointer p-2.5 rounded-lg hover:shadow-lg"
-      onClick={() => navigate(`/listings/${_id}`)}
+      onClick={() => navigate(`/listings/${listingId}`)}
     >
       <div className=" w-[320px] h-[302px] overflow-hidden rounded-lg mb-2.5">
         <div
@@ -70,10 +82,19 @@ const ListingCards = ({ list, booking }) => {
       <h3 className="text-[17px] font-semibold">{address}</h3>
       <p className="text-[14px] text-black/60">{category}</p>
       <p className="text-[14px] text-black/60">{type}</p>
-      <p className="text-[14px] font-semibold">
-        &#8377;{price}
-        <span className="text-[14px] font-normal "> night</span>
-      </p>
+      {!booking ? (
+        <p className="text-[14px] font-semibold">
+          &#8377;{price}
+          <span className="text-[14px] font-normal "> night</span>
+        </p>
+      ) : (
+        <>
+          <p className="text-[14px] font-medium">
+            {startDate} - {endDate}
+          </p>
+          <p className="text-[14px] font-semibold">&#8377;{totalPrice}</p>
+        </>
+      )}
     </div>
   );
 };
