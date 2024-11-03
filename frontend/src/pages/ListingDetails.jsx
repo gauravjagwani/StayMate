@@ -7,10 +7,15 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { useSelector } from "react-redux";
+import { FaHeart } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { setWishList } from "../redux/userSlice";
 
 const ListingDetails = () => {
   const { listingId } = useParams();
   const [listings, setListings] = useState(null);
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,6 +58,9 @@ const ListingDetails = () => {
 
   // console.log("LISTING DETAILS", listings);
   const customerId = useSelector((state) => state?.user?.user?._id);
+  const user = useSelector((state) => state?.user?.user);
+  const wishList = user?.wishList || [];
+  const isAddedToWishlist = wishList.find((item) => item._id === listingId);
 
   const handleSubmit = async () => {
     try {
@@ -78,6 +86,32 @@ const ListingDetails = () => {
       console.log(err);
     }
   };
+
+  // WishList
+
+  const patchWishList = async () => {
+    try {
+      if (user?._id !== listings?.creator?._id) {
+        const res = await fetch(
+          `http://localhost:4000/api/user/${customerId}/${listingId}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "appilication/json",
+            },
+          }
+        );
+        const data = await res.json();
+        dispatch(setWishList(data?.wishList));
+      } else {
+        return;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // JSX Starts Here
   return (
     <div className="mb-20">
       <Navbar />
@@ -85,7 +119,16 @@ const ListingDetails = () => {
         <div className="flex justify-between items-center sm:flex-col sm:items-start sm:gap-3 mb-3">
           <div className="flex items-center justify-between gap-4 w-full">
             <h1 className="text-2xl font-medium ">{listings?.title}</h1>
-            <div>Save</div>
+            <button
+              className={`text-2xl bg-none ${
+                isAddedToWishlist ? "text-red-600" : "text-gray-500"
+              }`}
+              onClick={() => {
+                patchWishList(customerId, listingId);
+              }}
+            >
+              <FaHeart />
+            </button>
           </div>
           {/* Images Start here */}
 

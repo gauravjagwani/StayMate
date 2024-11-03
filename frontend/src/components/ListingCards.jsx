@@ -23,10 +23,6 @@ const ListingCards = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state?.user?.user);
-  console.log("UUSSEERRR", user);
-  // const { _id, listingPhotoPaths, title, category, type, price, address } =
-  //   list;
-  console.log("Photolist", listingPhotoPaths);
 
   const goToPrevSlide = () => {
     setCurrentIndex(
@@ -42,7 +38,9 @@ const ListingCards = ({
   // WishList
 
   const wishList = user?.wishList || [];
+  const userId = user?._id;
   const isAddedToWishlist = wishList.find((item) => item._id === listingId);
+
   const patchWishList = async () => {
     try {
       if (user?._id !== creator._id) {
@@ -64,6 +62,7 @@ const ListingCards = ({
       console.log(err);
     }
   };
+
   return (
     <div
       className=" relative cursor-pointer p-2.5 rounded-lg hover:shadow-lg"

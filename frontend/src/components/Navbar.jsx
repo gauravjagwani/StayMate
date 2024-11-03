@@ -28,7 +28,7 @@ const loggedinMenuItems = [
   },
   {
     menu: "Wish List",
-    link: "/wishlist",
+    link: "/wishList",
     isloggedin: true,
   },
   {
