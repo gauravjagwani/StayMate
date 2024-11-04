@@ -27,7 +27,10 @@ export const addWishList = async (req, res, next) => {
     if (!user) {
       return next(errorHandler(404, "User not Found"));
     }
-    const listing = await ListingModels.findById(listingId).populate("creator");
+    const listing = await ListingModels.findById(listingId).populate({
+      path: "creator",
+      select: "-email -password",
+    });
 
     if (!listing) {
       return next(errorHandler(404, "Listing not Found"));
@@ -66,7 +69,10 @@ export const getPropertyList = async (req, res, next) => {
     const { userId } = req.params;
     const properties = await ListingModels.find({
       creator: userId,
-    }).populate("creator");
+    }).populate({
+      path: "creator",
+      select: "-email -password",
+    });
 
     res.status(200).json(properties);
   } catch (err) {}

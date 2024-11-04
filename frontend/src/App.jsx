@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
 import HomePage from "./pages/HomePage";
@@ -12,14 +12,19 @@ import WishList from "./pages/WishList";
 import PropertyList from "./pages/PropertyList";
 import ReservationList from "./pages/ReservationList";
 import SearchPage from "./pages/SearchPage";
+import { useSelector } from "react-redux";
 
 function App() {
   const [count, setCount] = useState(0);
+  const user = useSelector((state) => state?.user.user);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/"
+          element={user ? <HomePage /> : <Navigate to="/login" />}
+        />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/create-listing" element={<CreateListing />} />

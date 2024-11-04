@@ -60,11 +60,15 @@ export const getListings = async (req, res, next) => {
     let listings;
 
     if (qCategory) {
-      listings = await ListingModels.find({ category: qCategory }).populate(
-        "creator"
-      );
+      listings = await ListingModels.find({ category: qCategory }).populate({
+        path: "creator",
+        select: "-email -password",
+      });
     } else {
-      listings = await ListingModels.find().populate("creator");
+      listings = await ListingModels.find().populate({
+        path: "creator",
+        select: "-email -password",
+      });
     }
 
     res.status(200).json(listings);
@@ -77,7 +81,10 @@ export const getListingDetails = async (req, res, next) => {
   try {
     const { listingId } = req.params;
 
-    const listing = await ListingModels.findById(listingId).populate("creator");
+    const listing = await ListingModels.findById(listingId).populate({
+      path: "creator",
+      select: "-email -password",
+    });
     res.status(200).json(listing);
   } catch (err) {
     next(err);
@@ -90,14 +97,20 @@ export const getListingBySearch = async (req, res, next) => {
 
     let listings = [];
     if (search === "all") {
-      listings = await ListingModels.find().populate("creator");
+      listings = await ListingModels.find().populate({
+        path: "creator",
+        select: "-email -password",
+      });
     } else {
       listings = await ListingModels.find({
         $or: [
           { category: { $regex: search, $options: "i" } },
           { title: { $regex: search, $options: "i" } },
         ],
-      }).populate("creator");
+      }).populate({
+        path: "creator",
+        select: "-email -password",
+      });
     }
     res.status(200).json(listings);
   } catch (error) {

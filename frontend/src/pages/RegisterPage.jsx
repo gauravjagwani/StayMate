@@ -57,102 +57,109 @@ const RegisterPage = () => {
   };
   // console.log("Form Data", URL.createObjectURL(formData.profileImage));
   return (
-    <div className="mt-32 max-w-lg mx-auto shadow-md rounded-lg py-4 px-3 ">
-      <h1 className="text-4xl text-center font-medium mb-4">Register</h1>
-      <form
-        className="flex flex-col gap-3 items-center "
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="text"
-          placeholder="First Name"
-          name="firstName"
-          className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          name="lastName"
-          className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-          value={formData.lastName}
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          name="confirmPassword"
-          className="p-3 rounded-md border w-full hover:border-primary focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          required
-        />
-        {!passwordMatch && (
-          <p className="text-red-500 "> Password are not matched!</p>
-        )}
-
-        <input
-          id="image"
-          type="file"
-          name="profileImage"
-          accept="image/*"
-          className="hidden"
-          onChange={handleChange}
-          required
-        />
-
-        <label
-          htmlFor="image"
-          className="flex items-center gap-3 mt-2 mb-2 cursor-pointer"
+    <>
+      <img
+        className="w-60 h-40 mx-auto mb-0 mt-5"
+        src="/StayMate logo.png"
+        alt="Staymate Logo"
+      />
+      <div className="mt-10 max-w-lg mx-auto shadow-md rounded-lg py-4 px-3 ">
+        <h1 className="text-4xl text-center font-medium mb-4">Register</h1>
+        <form
+          className="flex flex-col gap-3 items-center "
+          onSubmit={handleSubmit}
         >
-          {formData.profileImage ? (
-            <img
-              src={URL.createObjectURL(formData.profileImage)}
-              alt="profile-photo"
-              style={{ maxWidth: "100px", borderRadius: "10px" }}
-            />
-          ) : (
-            <LuUpload size={30} />
+          <input
+            type="text"
+            placeholder="First Name"
+            name="firstName"
+            className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            name="lastName"
+            className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            value={formData.lastName}
+            onChange={handleChange}
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            className="p-3 rounded-md border w-full hover:border-pink-600 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            className="p-3 rounded-md border w-full hover:border-primary focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+          {!passwordMatch && (
+            <p className="text-red-500 "> Password are not matched!</p>
           )}
 
-          <p className="text-lg text-slate-700">Upload Your Avatar</p>
-        </label>
+          <input
+            id="image"
+            type="file"
+            name="profileImage"
+            accept="image/*"
+            className="hidden"
+            onChange={handleChange}
+            required
+          />
 
-        <button
-          type="submit"
-          className="bg-primary p-3 w-full text-white rounded-md disabled:opacity-70 disabled:cursor-not-allowed"
-          disabled={!passwordMatch}
-        >
-          Register
-        </button>
-      </form>
+          <label
+            htmlFor="image"
+            className="flex items-center gap-3 mt-2 mb-2 cursor-pointer"
+          >
+            {formData.profileImage ? (
+              <img
+                src={URL.createObjectURL(formData.profileImage)}
+                alt="profile-photo"
+                style={{ maxWidth: "100px", borderRadius: "10px" }}
+              />
+            ) : (
+              <LuUpload size={30} />
+            )}
 
-      <div className="mt-5 flex gap-2">
-        <p>Already have an account?</p>
-        <Link to={"/login"} className="text-blue-700">
-          Login
-        </Link>
+            <p className="text-lg text-slate-700">Upload Your Avatar</p>
+          </label>
+
+          <button
+            type="submit"
+            className="bg-primary p-3 w-full text-white rounded-md disabled:opacity-70 disabled:cursor-not-allowed"
+            disabled={!passwordMatch}
+          >
+            Register
+          </button>
+        </form>
+
+        <div className="mt-5 flex gap-2">
+          <p>Already have an account?</p>
+          <Link to={"/login"} className="text-blue-700">
+            Login
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

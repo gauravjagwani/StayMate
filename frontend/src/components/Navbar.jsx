@@ -57,7 +57,6 @@ const Navbar = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log("USER", user);
   const [dropdown, setDropdown] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -65,7 +64,11 @@ const Navbar = () => {
     // <div className="py-[10px] px-[60px] sm:py-[10px] sm:px-5 flex justify-between items-center relative mx-auto">
     <div className=" px-20 md:py-[15px] sm:py-[5px] flex justify-between items-center relative mx-auto z-50">
       <Link to={"/"}>
-        <h1 className="text-3xl">Logo</h1>
+        <img
+          className="w-36 h-30 m-0 p-0"
+          src="/StayMate logo.png"
+          alt="Logo"
+        />
       </Link>
       <div className="hidden lg:flex lg:w-[40%] justify-between border-[2px] border-black-[2] shadow-lg rounded-[30px] h-[50px] px-5 gap-10 items-center">
         <input
