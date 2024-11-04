@@ -8,7 +8,7 @@ import ListingCards from "./ListingCards";
 const Listings = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const { listings } = useSelector((state) => state.listings);
-  console.log(listings);
+
   const dispatch = useDispatch();
   const handleSelectCategory = (category) => {
     if (selectedCategory === category) {
@@ -40,7 +40,7 @@ const Listings = () => {
   return (
     <div>
       {/* Category Navigator */}
-      <div className=" gap-1 md:gap-6 px-10 py-10 flex justify-center items-center flex-wrap">
+      <div className=" gap-1 md:gap-6 px-10 py-10 grid grid-cols-4 md:flex justify-center items-center flex-wrap">
         {categoryItems.map((cat) => (
           <div
             key={cat?.id}

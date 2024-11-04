@@ -65,7 +65,7 @@ const Navbar = () => {
     <div className=" px-20 md:py-[15px] sm:py-[5px] flex justify-between items-center relative mx-auto z-50">
       <Link to={"/"}>
         <img
-          className="w-36 h-30 m-0 p-0"
+          className="md:w-36 md:h-30 w-28 h-20 m-0 p-0"
           src="/StayMate logo.png"
           alt="Logo"
         />
@@ -95,14 +95,14 @@ const Navbar = () => {
         {user ? (
           <Link
             to={"/create-listing"}
-            className="no-underline text-black text-[14px] font-medium hover:bg-gray-100 hover:rounded-[30px] p-3 cursor-pointer"
+            className="no-underline hidden md:block text-black text-[14px] font-medium hover:bg-gray-100 hover:rounded-[30px] p-3 cursor-pointer"
           >
             Staymate your home
           </Link>
         ) : (
           <Link
             to={"/login"}
-            className="no-underline text-black text-[14px] font-medium hover:bg-gray-100 hover:rounded-[30px] p-3 cursor-pointer"
+            className="no-underline hidden  md:block text-black text-[14px] font-medium hover:bg-gray-100 hover:rounded-[30px] p-3 cursor-pointer"
           >
             Staymate your home
           </Link>

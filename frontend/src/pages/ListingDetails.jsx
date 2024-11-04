@@ -116,11 +116,13 @@ const ListingDetails = () => {
     <div className="mb-20">
       <Navbar />
       <div className="max-w-[1280px] mx-auto">
-        <div className="flex justify-between items-center sm:flex-col sm:items-start sm:gap-3 mb-3">
+        <div className="flex justify-between items-center flex-col gap-3 sm:items-start sm:gap-3 mb-3">
           <div className="flex items-center justify-between gap-4 w-full">
-            <h1 className="text-2xl font-medium ">{listings?.title}</h1>
+            <h1 className="md:text-2xl text-lg font-medium ">
+              {listings?.title}
+            </h1>
             <button
-              className={`text-2xl bg-none ${
+              className={`md:text-2xl text-xl bg-none ${
                 isAddedToWishlist ? "text-red-600" : "text-gray-500"
               }`}
               onClick={() => {
@@ -134,9 +136,9 @@ const ListingDetails = () => {
 
           <PhotoGallery listings={listings} />
         </div>
-        <h1 className="text-2xl font-medium">{listings?.address}</h1>
-        <h3>{listings?.type}</h3>
-        <p className="text-xl max-w-[1000px] mt-3 text-black/70 ">
+        <h1 className="md:text-2xl text-lg font-medium">{listings?.address}</h1>
+        <h3 className="text-sm md:text-base">{listings?.type}</h3>
+        <p className="md:text-xl md:max-w-[1000px] max-w-[640px] text-lg mt-3 text-black/70 ">
           {listings?.guestCount} guests - {listings?.bedroomCount} bedroom(s){" "}
           {listings?.bedCount} bed(s) {listings?.bathroomCount} bathroom(s)
         </p>
@@ -152,19 +154,21 @@ const ListingDetails = () => {
             alt="Profile Image"
           />
 
-          <p className="text-xl font-semibold">
-            Hosted by {listings?.creator?.firstName}{" "}
-            {listings?.creator?.lastName}
+          <p className="md:text-xl text-lg ">
+            Hosted by
+            <span className=" md:text-xl ml-1 text-lg font-semibold">
+              {listings?.creator?.firstName} {listings?.creator?.lastName}
+            </span>
           </p>
         </div>
         <hr className="my-3 border-gray-500" />
         {/* Description */}
 
-        <h3 className="text-xl font-medium ">Description</h3>
-        <p className="text-lg mt-2">{listings?.description}</p>
+        <h3 className="md:text-xl text-lg  font-medium ">Description</h3>
+        <p className="md:text-lg text-base mt-2">{listings?.description}</p>
         <hr className="my-3 border-gray-500" />
         {/* Perks */}
-        <div className="flex justify-between mt-5">
+        <div className=" md:flex md:justify-between md:gap-y-0 gap-y-6 mt-5">
           <div className="flex flex-col lg:flex-row justify-between lg:gap-12">
             <div className="mt-1">
               <h3 className="text-xl font-medium ">Amenities</h3>
@@ -175,14 +179,14 @@ const ListingDetails = () => {
                       className="flex gap-2 items-center justify-start p-2"
                       key={i}
                     >
-                      <div className="text-3xl ">
+                      <div className="md:text-3xl text-lg ">
                         {
                           facilities?.find(
                             (facility) => facility?.name === perk
                           )?.icon
                         }
                       </div>
-                      <p className="font-medium text-xl">{perk}</p>
+                      <p className="font-medium text-base md:text-xl">{perk}</p>
                     </div>
                   ))}
               </div>
@@ -200,18 +204,18 @@ const ListingDetails = () => {
                 ₹{listings?.price} X {dayCount === 0 ? 1 : dayCount} night
               </h2>
             )}
-            <h2 className="text-xl font-medium text-black/90">
+            <h2 className="md:text-xl text-base font-medium text-black/90">
               Total Price: ₹ {listings?.price * (dayCount === 0 ? 1 : dayCount)}
             </h2>
 
-            <p className="text-lg font-normal text-black/90">
+            <p className="md:text-lg text-base font-normal text-black/90">
               Start Date: {dateRange[0].startDate.toDateString()}
             </p>
-            <p className="text-lg font-normal text-black/90">
+            <p className="md:text-lg text-base font-normal text-black/90">
               End Date: {dateRange[0].endDate.toDateString()}
             </p>
             <button
-              className="w-full bg-primary py-3 text-white text-xl rounded-xl hover:opacity-90 uppercase"
+              className="w-full bg-primary md:py-3 py-2 text-white md:text-xl text-base rounded-xl hover:opacity-90 uppercase"
               type="submit"
               onClick={handleSubmit}
             >

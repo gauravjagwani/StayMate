@@ -63,8 +63,10 @@ const RegisterPage = () => {
         src="/StayMate logo.png"
         alt="Staymate Logo"
       />
-      <div className="mt-10 max-w-lg mx-auto shadow-md rounded-lg py-4 px-3 ">
-        <h1 className="text-4xl text-center font-medium mb-4">Register</h1>
+      <div className="mt-10 max-w-md md:max-w-lg mx-auto shadow-md rounded-lg py-4 px-3 ">
+        <h1 className="text-3xl md:text-4xl text-center font-medium mb-4">
+          Register
+        </h1>
         <form
           className="flex flex-col gap-3 items-center "
           onSubmit={handleSubmit}
