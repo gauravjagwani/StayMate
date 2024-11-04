@@ -71,3 +71,14 @@ export const getPropertyList = async (req, res, next) => {
     res.status(200).json(properties);
   } catch (err) {}
 };
+
+export const getReservationList = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const reservations = await Booking.find({
+      hostId: userId,
+    }).populate("customerId hostId listingId");
+
+    res.status(200).json(reservations);
+  } catch (err) {}
+};

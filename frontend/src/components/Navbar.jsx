@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import { LuMenu } from "react-icons/lu";
@@ -56,8 +56,10 @@ const loggedinMenuItems = [
 const Navbar = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   console.log("USER", user);
   const [dropdown, setDropdown] = useState(false);
+  const [search, setSearch] = useState("");
 
   return (
     // <div className="py-[10px] px-[60px] sm:py-[10px] sm:px-5 flex justify-between items-center relative mx-auto">
@@ -70,11 +72,22 @@ const Navbar = () => {
           type="text"
           className="outline-none"
           placeholder="Search your stay"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
-        <div className="bg-primary p-[6.5px] rounded-full">
+        <button
+          disabled={search.trim() === ""}
+          className="bg-primary p-[6.5px] rounded-full"
+          onClick={() => navigate(`/listings/search/${search}`)}
+        >
           <CiSearch size={25} className="text-white " />
-        </div>
+        </button>
       </div>
+      {/* {user && (
+        <div className="no-underline text-black text-[14px] font-medium">
+          Hello, {user?.user?.firstName} {user?.user?.lastName}
+        </div>
+      )} */}
       <div className="flex items-center gap-4">
         {user ? (
           <Link
@@ -122,6 +135,10 @@ const Navbar = () => {
         )}
         {dropdown && user && (
           <div className="absolute bg-white right-15 sm:right-5 top-20 w-52 flex flex-col gap-3 border border-black-3 p-2.5 shadow-lg rounded-md">
+            <div className="font-medium ">
+              Hello, {user?.user?.firstName} {user?.user?.lastName}
+            </div>
+            <hr />
             {loggedinMenuItems.map((item, index) =>
               item?.menu === "Logout" ? (
                 <Link

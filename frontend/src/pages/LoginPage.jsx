@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const LoginPage = () => {
+  const user = useSelector((state) => state.user.user);
   const [email, setEmail] = useState("");
   const [loginError, setloginError] = useState(false);
   const [password, setPassword] = useState("");

@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import {
   createListing,
+  getListingBySearch,
   getListingDetails,
   getListings,
 } from "../controller/listing_controller.js";
@@ -21,5 +22,6 @@ const router = express.Router();
 router.post("/create", upload.array("listingPhotos"), createListing);
 router.get("/", getListings);
 router.get("/:listingId", getListingDetails);
+router.get("/search/:search", getListingBySearch);
 
 export default router;
