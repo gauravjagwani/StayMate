@@ -17,7 +17,9 @@ const SearchPage = () => {
   const getSearchResult = async () => {
     try {
       const res = await fetch(
-        `http://localhost:4000/api/listings/search/${search}`,
+        `${
+          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+        }/api/listings/search/${search}`,
         {
           method: "GET",
         }

@@ -15,7 +15,9 @@ const PropertyList = () => {
   const getPropertyList = async () => {
     try {
       const res = await fetch(
-        `http://localhost:4000/api/user/${user?._id}/properties`,
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/user/${
+          user?._id
+        }/properties`,
         {
           method: "GET",
         }

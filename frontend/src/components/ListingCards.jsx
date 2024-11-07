@@ -45,7 +45,9 @@ const ListingCards = ({
     try {
       if (user?._id !== creator._id) {
         const res = await fetch(
-          `http://localhost:4000/api/user/${user?._id}/${listingId}`,
+          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/user/${
+            user?._id
+          }/${listingId}`,
           {
             method: "PATCH",
             headers: {

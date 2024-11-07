@@ -113,14 +113,17 @@ const CreateListing = () => {
         listingsForm.append("listingPhotos", photo);
       });
 
-      const res = await fetch("http://localhost:4000/api/listings/create", {
-        method: "POST",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
+      const res = await fetch(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/listings/create`,
+        {
+          method: "POST",
+          // headers: {
+          //   "Content-Type": "application/json",
+          // },
 
-        body: listingsForm,
-      });
+          body: listingsForm,
+        }
+      );
       if (res.ok) {
         console.log("Data Posted Successfully");
         navigate("/");

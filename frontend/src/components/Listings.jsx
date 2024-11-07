@@ -27,8 +27,10 @@ const Listings = () => {
     try {
       const res = await fetch(
         selectedCategory !== ""
-          ? `http://localhost:4000/api/listings?category=${selectedCategory}`
-          : `http://localhost:4000/api/listings`,
+          ? `${
+              import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+            }/api/listings?category=${selectedCategory}`
+          : `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/listings`,
         {
           method: "GET",
         }

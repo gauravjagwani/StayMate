@@ -26,7 +26,9 @@ const ListingDetails = () => {
   const getListingDetails = async () => {
     try {
       const res = await fetch(
-        `http://localhost:4000/api/listings/${listingId}`,
+        `${
+          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+        }/api/listings/${listingId}`,
         {
           method: "GET",
         }
@@ -72,11 +74,14 @@ const ListingDetails = () => {
         endDate: dateRange[0].endDate.toDateString(),
         totalPrice: listings?.price * dayCount,
       };
-      const res = await fetch("http://localhost:4000/api/booking/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bookingForm),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/booking/create`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bookingForm),
+        }
+      );
 
       if (res.ok) {
         console.log(res);
@@ -93,7 +98,9 @@ const ListingDetails = () => {
     try {
       if (user?._id !== listings?.creator?._id) {
         const res = await fetch(
-          `http://localhost:4000/api/user/${customerId}/${listingId}`,
+          `${
+            import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+          }/api/user/${customerId}/${listingId}`,
           {
             method: "PATCH",
             headers: {

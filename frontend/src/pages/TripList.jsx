@@ -18,7 +18,9 @@ const TripList = () => {
   const getTripList = async () => {
     try {
       const res = await fetch(
-        `http://localhost:4000/api/user/${userId}/trips`,
+        `${
+          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+        }/api/user/${userId}/trips`,
         {
           method: "GET",
         }

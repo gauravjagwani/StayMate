@@ -15,7 +15,9 @@ const ReservationList = () => {
   const getReservations = async () => {
     try {
       const res = await fetch(
-        `http://localhost:4000/api/user/${user?._id}/reservations`,
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/user/${
+          user?._id
+        }/reservations`,
         { method: "GET" }
       );
       const data = await res.json();
