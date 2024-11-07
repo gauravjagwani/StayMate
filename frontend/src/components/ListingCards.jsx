@@ -80,7 +80,7 @@ const ListingCards = ({
                 key={index}
               >
                 <img
-                  src={`http://localhost:4000/${photo.replace("public", "")}`}
+                  src={photo}
                   alt=""
                   className="w-full h-full brightness-90"
                 />

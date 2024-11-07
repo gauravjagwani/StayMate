@@ -1,0 +1,33 @@
+cloudinaryConfig.js -- 
+export const uploadFile = async (filePath) => {
+  try {
+    const result = await cloudinary.uploader.upload(filePath);
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+AuthRoute.js-- 
+var uploader = multer({
+  storage: multer.diskStorage({}),
+  limits: { fileSize: 500000 },
+});
+
+router.post("/register", uploader.single("profileImage"), register);
+
+Auth_Controller.js --
+export const register = async (req, res, next) => {
+  try {
+    const { firstName, lastName, email, password } = req.body;
+    const profileImage = req.file;
+    const uploadResponse = await uploadFile(profileImage.path);
+     const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      profileImage: uploadResponse.secure_url,
+    });
+

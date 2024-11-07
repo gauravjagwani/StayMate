@@ -45,7 +45,8 @@ const listingSchema = new mongoose.Schema(
     },
 
     listingPhotoPaths: {
-      type: [String], // An array of strings (image paths)
+      type: [String],
+      // default: [], // An array of strings (image paths)
       required: true, // It is required
     },
 

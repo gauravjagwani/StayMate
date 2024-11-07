@@ -114,10 +114,7 @@ const Navbar = () => {
           <LuMenu size={18} />
           {user?.user ? (
             <img
-              src={`http://localhost:4000/${user?.user?.profileImage.replace(
-                "public",
-                ""
-              )}`}
+              src={user?.user?.profileImage}
               alt="profile-photo"
               className="w-8 h-8 object-cover rounded-full"
             />

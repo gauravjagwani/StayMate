@@ -147,10 +147,7 @@ const ListingDetails = () => {
         <div className="flex items-center gap-4">
           <img
             className="w-[80px] h-[80px] object-cover rounded-full"
-            src={`http://localhost:4000/${listings?.creator?.profileImage.replace(
-              "public",
-              ""
-            )}`}
+            src={listings?.creator?.profileImage}
             alt="Profile Image"
           />
 

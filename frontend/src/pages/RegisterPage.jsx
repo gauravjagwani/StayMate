@@ -15,7 +15,6 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Rendering");
     setPasswordMatch(
       formData.password === formData.confirmPassword ||
         formData.confirmPassword === ""
@@ -34,9 +33,11 @@ const RegisterPage = () => {
       [name]: name === "profileImage" ? files[0] : value,
     });
   };
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     try {
       const registerForm = new FormData();
 
@@ -51,8 +52,13 @@ const RegisterPage = () => {
       if (response.ok) {
         navigate("/login");
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      if (err.response && err.response.status === 409) {
+        // Set the error message to the response error
+        setError(err.response.data.error);
+      } else {
+        setError("An error occurred. Please try again.");
+      }
     }
   };
   // console.log("Form Data", URL.createObjectURL(formData.profileImage));
@@ -152,6 +158,7 @@ const RegisterPage = () => {
           >
             Register
           </button>
+          {error && <p className="text-red-600 px-2 ">{error}</p>}
         </form>
 
         <div className="mt-5 flex gap-2">

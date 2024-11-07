@@ -1,6 +1,8 @@
+import { uploadFile } from "../cloudinaryConfig.js";
 import ListingModels from "../models/listing.model.js";
 import { errorHandler } from "../utils/error.js";
 export const createListing = async (req, res, next) => {
+  console.log("CREATE LISTING LOG");
   try {
     const {
       creator,
@@ -17,17 +19,21 @@ export const createListing = async (req, res, next) => {
       price,
     } = req.body;
 
-    // console.log("Before...", creator, title, category, type);
     // * LISTING PHOTOS CODE LATER
 
     const listingPhotos = req.files;
 
-    // if (!listingPhotos) {
-    //   next(errorHandler(400, "No File Uploaded"));
-    // }
+    if (!listingPhotos) {
+      next(errorHandler(400, "No File Uploaded"));
+    }
     // const listingPhotoPaths = listingPhotos.map((file) => file.path);
-    const listingPhotoPaths = listingPhotos.map((photo) => photo.path);
-    console.log("PHOTOS", listingPhotoPaths);
+    const filePaths = listingPhotos.map((file) => file.path);
+    // const listingPhotoPaths = listingPhotos.map((photo) => photo.path);
+    const uploadResponses = await uploadFile(filePaths);
+    // console.log("PHOTOS", uploadResponses);
+    // const profileImageUrls = uploadResponses.map(
+    //   (response) => response.secure_url
+    // );
 
     const newListings = new ListingModels({
       creator,
@@ -40,7 +46,7 @@ export const createListing = async (req, res, next) => {
       bedCount,
       bathroomCount,
       perks,
-      listingPhotoPaths,
+      listingPhotoPaths: uploadResponses,
       description,
       price,
     });
@@ -49,7 +55,8 @@ export const createListing = async (req, res, next) => {
     await newListings.save();
     res.status(201).json(newListings);
   } catch (err) {
-    next(err);
+    console.log(err.message);
+    // next(err);
   }
 };
 

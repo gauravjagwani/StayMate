@@ -1,23 +1,30 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { cloudinary } from "../cloudinaryConfig.js";
 import { errorHandler } from "../utils/error.js";
+import { uploadFile } from "../cloudinaryConfig.js";
 
 export const register = async (req, res, next) => {
   try {
     const { firstName, lastName, email, password } = req.body;
 
     const profileImage = req.file;
-    console.log("Profile Image", profileImage);
     if (!profileImage) {
       return res.status(400).send("No file uploaded");
     }
+    // Upload image to Cloudinary
+    // const uploadResponse = await cloudinary.uploader.upload(profileImage.path, {
+    //   folder: "profile_images", // Optional: specify folder in Cloudinary
+    // });
 
-    const profileImagePath = profileImage.path;
+    const uploadResponse = await uploadFile(profileImage.path);
+
+    // const profileImagePath = profileImage.path;
     const existingUser = await User.findOne({ email });
     // Validating if user already exists
     if (existingUser) {
-      return next(errorHandler(409, "User already exists"));
+      return res.status(409).json({ error: "User Already Exists" });
     }
 
     const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -26,7 +33,7 @@ export const register = async (req, res, next) => {
       lastName,
       email,
       password: hashedPassword,
-      profileImage: profileImagePath,
+      profileImage: uploadResponse.secure_url,
     });
 
     await newUser.save();

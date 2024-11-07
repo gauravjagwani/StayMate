@@ -27,10 +27,11 @@ const PhotoGallery = ({ listings }) => {
               <div key={i}>
                 <img
                   className="w-full "
-                  src={`http://localhost:4000/${photos?.[i].replace(
-                    "public",
-                    ""
-                  )}`}
+                  // src={`http://localhost:4000/${photos?.[i].replace(
+                  //   "public",
+                  //   ""
+                  // )}`}
+                  src={photo}
                   alt=""
                 />
               </div>
@@ -43,19 +44,18 @@ const PhotoGallery = ({ listings }) => {
   return (
     <div className="md:grid md:grid-cols-4 md:auto-rows-[300px] md:gap-2 relative">
       {photos &&
-        photos
-          .slice(0, 5)
-          .map((photo, i) => (
-            <img
-              key={i}
-              onClick={() => setShowAllPhotos(true)}
-              src={`http://localhost:4000/${photos?.[i].replace("public", "")}`}
-              className={`rounded-2xl object-cover w-full h-full cursor-pointer hover:opacity-90 ${
-                i === 0 ? "row-span-2 col-span-2" : ""
-              }`}
-              alt=""
-            />
-          ))}
+        photos.slice(0, 5).map((photo, i) => (
+          <img
+            key={i}
+            onClick={() => setShowAllPhotos(true)}
+            src={photo}
+            // src={`http://localhost:4000/${photos?.[i].replace("public", "")}`}
+            className={`rounded-2xl object-cover w-full h-full cursor-pointer hover:opacity-90 ${
+              i === 0 ? "row-span-2 col-span-2" : ""
+            }`}
+            alt=""
+          />
+        ))}
       <button
         onClick={() => setShowAllPhotos(true)}
         className="absolute bottom-5 right-5 bg-white text-sm flex gap-2 px-2 py-2 rounded-xl items-center"

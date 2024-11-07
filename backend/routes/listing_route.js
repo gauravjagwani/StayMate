@@ -7,6 +7,7 @@ import {
   getListings,
 } from "../controller/listing_controller.js";
 
+/*
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/uploads/");
@@ -17,9 +18,20 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+*/
+var uploader = multer({
+  storage: multer.diskStorage({}),
+  limits: { fileSize: 50 * 1024 * 1024 },
+});
+// console.log(uploader.array("listingPhotos"));
 const router = express.Router();
 
-router.post("/create", upload.array("listingPhotos"), createListing);
+router.post(
+  "/create",
+  uploader.array("listingPhotos"),
+  // uploader.fields([{ name: "listingPhotos", maxCount: 10 }]),
+  createListing
+);
 router.get("/", getListings);
 router.get("/:listingId", getListingDetails);
 router.get("/search/:search", getListingBySearch);
