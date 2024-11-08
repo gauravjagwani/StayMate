@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoMdPhotos } from "react-icons/io";
+import ShimmerImage from "./ShimmerImage";
 
-const PhotoGallery = ({ listings }) => {
+const PhotoGallery = ({ listings, isLoading, setIsLoading }) => {
   console.log(listings);
   const photos = listings?.listingPhotoPaths;
   const [showAllPhotos, setShowAllPhotos] = useState(false);

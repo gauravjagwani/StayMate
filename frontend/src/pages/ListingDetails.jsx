@@ -10,21 +10,20 @@ import { useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setWishList } from "../redux/userSlice";
+import ShimmerImage from "../components/ShimmerImage";
 
 const ListingDetails = () => {
   const { listingId } = useParams();
+  const [isloading, setIsloading] = useState(false);
   const [listings, setListings] = useState(null);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getListingDetails();
-  }, []);
-
   //  * FETCHING PROPERTY DETAILS
   const getListingDetails = async () => {
     try {
+      setIsloading(true);
       const res = await fetch(
         `${
           import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
@@ -38,8 +37,14 @@ const ListingDetails = () => {
       setListings(data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsloading(false);
     }
   };
+
+  useEffect(() => {
+    getListingDetails();
+  }, []);
 
   // Calender
   const [dateRange, setDateRange] = useState([
@@ -141,7 +146,7 @@ const ListingDetails = () => {
           </div>
           {/* Images Start here */}
 
-          <PhotoGallery listings={listings} />
+          {!isloading ? <PhotoGallery listings={listings} /> : <ShimmerImage />}
         </div>
         <h1 className="md:text-2xl text-lg font-medium">{listings?.address}</h1>
         <h3 className="text-sm md:text-base">{listings?.type}</h3>
@@ -152,11 +157,15 @@ const ListingDetails = () => {
         {/* Hosted By Section */}
         <hr className="my-3 border-gray-500" />
         <div className="flex items-center gap-4">
-          <img
-            className="w-[80px] h-[80px] object-cover rounded-full"
-            src={listings?.creator?.profileImage}
-            alt="Profile Image"
-          />
+          {!isloading ? (
+            <img
+              className="w-[80px] h-[80px] object-cover rounded-full"
+              src={listings?.creator?.profileImage}
+              alt="Profile Image"
+            />
+          ) : (
+            <div className="w-[80px] h-[80px] bg-gray-300 animate-pulse object-cover rounded-full"></div>
+          )}
 
           <p className="md:text-xl text-lg ">
             Hosted by

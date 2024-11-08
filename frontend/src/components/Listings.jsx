@@ -7,6 +7,7 @@ import ListingCards from "./ListingCards";
 
 const Listings = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { listings } = useSelector((state) => state.listings);
 
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const Listings = () => {
   // * Fetch Lisitings from API on bases of categories
   const getListings = async () => {
     try {
+      setIsLoading(true);
       const res = await fetch(
         selectedCategory !== ""
           ? `${
@@ -37,7 +39,11 @@ const Listings = () => {
       );
       const data = await res.json();
       dispatch(setListings({ listings: data }));
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <div>
@@ -82,6 +88,7 @@ const Listings = () => {
                 type={type}
                 price={price}
                 booking={booking}
+                isLoading={isLoading}
               />
             )
           )}
