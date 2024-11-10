@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 import { setTripList } from "../redux/userSlice";
 import ListingCards from "../components/ListingCards";
+import Footer from "../components/Footer";
 
 const TripList = () => {
   const userId = useSelector((state) => state?.user?.user?._id);
@@ -68,6 +69,7 @@ const TripList = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

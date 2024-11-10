@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { setReservationList } from "../redux/userSlice";
 import ListingCards from "../components/ListingCards";
+import Footer from "../components/Footer";
 
 const ReservationList = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const ReservationList = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

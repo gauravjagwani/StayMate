@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { categoryItems, facilities, types } from "../lib/utils";
 import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
@@ -7,13 +7,13 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BiTrash } from "react-icons/bi";
 import { IoIosImages } from "react-icons/io";
+import Footer from "../components/Footer";
 
 const CreateListing = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
   const [perks, setPerks] = useState([]);
-
   const [guestCount, setGuestCount] = useState(1);
   const [bedroomCount, setBedroomCount] = useState(1);
   const [bedCount, setBedCount] = useState(1);
@@ -42,7 +42,15 @@ const CreateListing = () => {
     }
   };
 
+  // const [isError, setIsError] = useState(false);
   const [photos, setPhotos] = useState([]);
+  // useEffect(() => {
+  //   if (photos.length < 5) {
+  //     setIsError(true);
+  //   } else {
+  //     setIsError(false);
+  //   }
+  // }, [photos]);
 
   const handleUploadPhotos = (e) => {
     const newPhotos = e.target.files;
@@ -73,25 +81,6 @@ const CreateListing = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      /*
-      const listingsForm = {};
-
-      Object.assign(listingsForm, {
-        creator: creatorId,
-        title: formDescription.title,
-        category: category,
-        address: formAddress,
-        type,
-        guestCount,
-        bedroomCount,
-        bedCount,
-        bathroomCount,
-        perks,
-        description: formDescription.description,
-        price: formDescription.price,
-      });
-
-      */
       const listingsForm = new FormData();
       listingsForm.append("creator", creatorId);
       listingsForm.append("title", formDescription.title);
@@ -354,7 +343,9 @@ const CreateListing = () => {
           {/* Upload Photos */}
           <div className="flex flex-col gap-1 mb-4">
             <h2 className="text-[22px] font-semibold">Upload Photos</h2>
-            <p className="text-sm opacity-80">Add Photos of your place</p>
+            <p className="text-sm opacity-80">
+              Add Photos of your place (Add Minimum of 5 Photos)
+            </p>
 
             <DragDropContext onDragEnd={handleDragPhoto}>
               <Droppable droppableId="photos" direction="horizontal">
@@ -443,6 +434,11 @@ const CreateListing = () => {
                           <p className="font-semibold text-center">
                             Upload from your device
                           </p>
+                          {photos.length < 5 && (
+                            <p className="text-red-500 font-medium">
+                              Add Minimum of 5 Photos
+                            </p>
+                          )}
                         </label>
                       </>
                     )}
@@ -484,12 +480,14 @@ const CreateListing = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-2 bg-primary text-white text-lg font-normal text-center rounded-md"
+            // disabled={true}
+            className={`w-full py-2 bg-primary text-white text-lg font-normal text-center rounded-md cursor-pointer`}
           >
             Save
           </button>
         </form>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { setPropertyList } from "../redux/userSlice";
 import ListingCards from "../components/ListingCards";
+import Footer from "../components/Footer";
 
 const PropertyList = () => {
   const user = useSelector((state) => state?.user?.user);
@@ -66,6 +67,7 @@ const PropertyList = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

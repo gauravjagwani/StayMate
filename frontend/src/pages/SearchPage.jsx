@@ -4,6 +4,7 @@ import ListingCards from "../components/ListingCards";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setListings } from "../redux/listingSlice";
+import Footer from "../components/Footer";
 
 const SearchPage = () => {
   const { search } = useParams();
@@ -66,6 +67,7 @@ const SearchPage = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

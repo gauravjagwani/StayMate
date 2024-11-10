@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 import ListingCards from "../components/ListingCards";
+import Footer from "../components/Footer";
 
 const WishList = () => {
   const wishList = useSelector((state) => state?.user?.user?.wishList);
@@ -41,6 +42,7 @@ const WishList = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LuUpload } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -171,6 +172,7 @@ const RegisterPage = () => {
           </Link>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

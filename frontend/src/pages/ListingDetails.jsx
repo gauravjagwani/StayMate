@@ -11,6 +11,7 @@ import { FaHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setWishList } from "../redux/userSlice";
 import ShimmerImage from "../components/ShimmerImage";
+import Footer from "../components/Footer";
 
 const ListingDetails = () => {
   const { listingId } = useParams();
@@ -127,7 +128,7 @@ const ListingDetails = () => {
   return (
     <div className="mb-20">
       <Navbar />
-      <div className="max-w-[1280px] mx-auto">
+      <div className="max-w-[1280px] mx-auto ">
         <div className="flex justify-between items-center flex-col gap-3 sm:items-start sm:gap-3 mb-3">
           <div className="flex items-center justify-between gap-4 w-full">
             <h1 className="md:text-2xl text-lg font-medium ">
@@ -237,6 +238,7 @@ const ListingDetails = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
