@@ -172,7 +172,6 @@ const RegisterPage = () => {
           </Link>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
