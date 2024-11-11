@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { delay } from "./lib/utils";
 
 import "./App.css";
+
 const HomePage = lazy(() => import("./pages/HomePage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
@@ -16,6 +17,7 @@ const ReservationList = lazy(() => import("./pages/ReservationList"));
 import Loader from "./components/Loader";
 
 import { useSelector } from "react-redux";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -38,6 +40,7 @@ function App() {
           <Route path="/:userId/wishList" element={<WishList />} />
           <Route path="/:userId/properties" element={<PropertyList />} />
           <Route path="/:userId/reservations" element={<ReservationList />} />
+          <Route path="/*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
