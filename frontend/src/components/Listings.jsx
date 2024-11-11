@@ -80,6 +80,7 @@ const Listings = () => {
               booking = false,
             }) => (
               <ListingCards
+                key={_id}
                 listingId={_id}
                 creator={creator}
                 listingPhotoPaths={listingPhotoPaths}

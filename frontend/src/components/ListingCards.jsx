@@ -85,8 +85,10 @@ const ListingCards = ({
                 >
                   <img
                     src={photo}
-                    alt=""
-                    className="w-full h-full brightness-90"
+                    alt="Photo"
+                    className="w-full h-full object-cover brightness-90 filter blur-sm transition-all duration-200 ease-in-out"
+                    loading="lazy"
+                    onLoad={(e) => e.target.classList.remove("blur-sm")}
                   />
 
                   <div

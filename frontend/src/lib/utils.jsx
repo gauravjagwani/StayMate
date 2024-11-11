@@ -216,3 +216,5 @@ export const facilities = [
     icon: <MdPets size={26} />,
   },
 ];
+
+export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

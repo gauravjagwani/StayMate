@@ -34,6 +34,12 @@ const CreateListing = () => {
     });
   };
 
+  // const handleBlur = () => {
+  //   setShowDisplay(formDescription);
+  // };
+  console.log(formDescription);
+  console.log("rendering");
+
   const handleSelectPerks = (perk) => {
     if (perks.includes(perk)) {
       setPerks((prev) => perks.filter((option) => option !== perk));
