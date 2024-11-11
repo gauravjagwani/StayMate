@@ -33,7 +33,7 @@ function App() {
           />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/:userId/create-listing" element={<CreateListing />} />
+          <Route path="/create-listing" element={<CreateListing />} />
           <Route path="/listings/:listingId" element={<ListingDetails />} />
           <Route path="/listings/search/:search" element={<SearchPage />} />
           <Route path="/:userId/trips" element={<TripList />} />
